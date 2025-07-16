@@ -1,0 +1,167 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #4f46e5; /* Tailwind indigo-600 */
+  color: white;
+  padding: 0.75rem 1rem;
+  border-radius: 0.75rem;
+  margin: 1rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+/* Left side container */
+.nav-left,
+.left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  position: relative;
+}
+
+/* Right side container */
+.nav-right,
+.right {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Logo link */
+.logoLink {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.2s ease;
+}
+.logoLink:hover {
+  transform: scale(1.03);
+}
+
+/* Logo image */
+.logo {
+  height: 48px;   /* bigger logo */
+  width: auto;
+  display: block;
+  filter: brightness(0) invert(1); /* make dark logo white */
+}
+
+/* Logo text */
+.logoText {
+  font-size: 1.5rem;    /* bigger text */
+  font-weight: 700;
+  color: white;
+  letter-spacing: 0.5px;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+}
+
+/* Dropdown container */
+.dropdown {
+  position: relative;
+}
+
+/* Dropdown toggle button */
+.dropdown-toggle,
+.menuButton {
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  color: white;
+  padding: 0.4rem 0.75rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: background 0.2s ease;
+}
+.dropdown-toggle:hover,
+.menuButton:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Dropdown menu panel */
+.dropdown-menu,
+.dropdownContent {
+  position: absolute;
+  top: 2.5rem;
+  right: 0;
+  background: white;
+  color: #333;
+  border: 1px solid #ddd;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  min-width: 160px;
+  z-index: 10;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-5px);
+  transition: all 0.2s ease;
+}
+.dropdown:hover .dropdown-menu,
+.dropdown:hover .dropdownContent {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+/* Dropdown links */
+.dropdown-menu a,
+.dropdownContent a {
+  padding: 0.6rem 1rem;
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+  transition: background 0.2s ease;
+}
+.dropdown-menu a:hover,
+.dropdownContent a:hover {
+  background: #eef;
+}
+
+/* Common action buttons */
+.iconButton,
+.logoutButton,
+.upgradeButton {
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  color: white;
+  padding: 0.4rem 0.75rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  transition: background 0.2s ease;
+}
+.iconButton:hover,
+.logoutButton:hover,
+.upgradeButton:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Upgrade button emphasized */
+.upgradeButton {
+  background: gold;
+  color: black;
+  font-weight: 600;
+}
+.upgradeButton:hover {
+  background: #ffd700;
+}
+
+/* Responsive tweaks */
+@media (max-width: 600px) {
+  .logoText {
+    font-size: 1.2rem;
+  }
+  .logo {
+    height: 36px;
+  }
+}

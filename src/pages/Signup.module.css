@@ -1,0 +1,253 @@
+/* Wrapper */
+.pageWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: #f4f6f8;
+  transition: background 0.3s ease;
+}
+
+/* Dark mode */
+.pageWrapper.dark {
+  background: #1a1a1a;
+}
+
+/* Card */
+.card {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 800px;
+  animation: fadeInUp 0.5s ease;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+/* Dark mode card */
+.pageWrapper.dark .card {
+  background: #2a2a2a;
+  color: #eee;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.title {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  font-size: 1.8rem;
+}
+
+/* Form Grid */
+.form {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+@media (min-width: 600px) {
+  .form {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* Label */
+.label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: 1px solid #ddd;
+  padding: 0.6rem;
+  border-radius: 6px;
+  background: #f9f9f9;
+  position: relative;
+  transition: border 0.3s, background 0.3s;
+}
+
+/* Label focus effect */
+.label:focus-within {
+  border-color: #4caf50;
+  background: #eef7ee;
+}
+
+/* Input */
+.label input,
+.label select {
+  border: none;
+  background: transparent;
+  flex: 1;
+  font-size: 1rem;
+  outline: none;
+  color: inherit;
+  transition: color 0.3s;
+}
+
+/* Voice mic button */
+.iconButton {
+  background: transparent;
+  border: none;
+  color: #666;
+  cursor: pointer;
+  padding: 0.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s;
+}
+
+.iconButton:hover {
+  color: #333;
+}
+
+/* Checkbox rows (full width) */
+.checkbox {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.95rem;
+}
+
+/* reCAPTCHA container */
+.recaptcha {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: center;
+}
+
+/* Actions row (FaceID & Thumbprint) */
+.actionsRow {
+  grid-column: 1 / -1;
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* Buttons */
+.button,
+.secondaryButton {
+  padding: 0.75rem;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: background 0.3s, color 0.3s;
+}
+
+/* Primary Button */
+.button {
+  background: #4caf50;
+  color: white;
+  grid-column: 1 / -1;
+}
+
+.button:hover {
+  background: #43a047;
+}
+
+.button:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+/* Secondary Buttons */
+.secondaryButton {
+  background: #e0e0e0;
+  color: #333;
+  font-size: 0.95rem;
+}
+
+.secondaryButton:hover {
+  background: #d5d5d5;
+}
+
+/* Google button container */
+.googleButton {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: center;
+}
+
+/* Profile Photo Preview */
+.preview {
+  grid-column: 1 / -1;
+  text-align: center;
+}
+
+.preview img {
+  max-width: 100px;
+  border-radius: 50%;
+  margin-top: 0.5rem;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Success and error messages */
+.success {
+  grid-column: 1 / -1;
+  color: green;
+  text-align: center;
+}
+
+.error {
+  grid-column: 1 / -1;
+  color: red;
+  text-align: center;
+}
+
+.footer {
+  grid-column: 1 / -1;
+  text-align: center;
+  margin-top: 1rem;
+  font-size: 0.95rem;
+}
+
+/* Dark mode adjustments */
+.pageWrapper.dark .label {
+  background: #3a3a3a;
+  border: 1px solid #555;
+}
+
+.pageWrapper.dark input {
+  color: #eee;
+}
+
+.pageWrapper.dark .secondaryButton {
+  background: #555;
+  color: #eee;
+}
+
+.pageWrapper.dark .button {
+  background: #388e3c;
+}
+
+.pageWrapper.dark .button:hover {
+  background: #2e7d32;
+}
+
+.pageWrapper.dark .googleButton {
+  filter: brightness(0.9);
+}

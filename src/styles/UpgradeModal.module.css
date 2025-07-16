@@ -1,0 +1,101 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(2px);
+  z-index: 1000;
+}
+
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  border-radius: 0.75rem;
+  padding: 2rem;
+  max-width: 600px;
+  width: 90%;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  z-index: 1001;
+  overflow-y: auto;
+  max-height: 90vh;
+}
+
+.closeButton {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #666;
+}
+
+.title {
+  margin: 0 0 0.5rem;
+  font-size: 1.6rem;
+  text-align: center;
+}
+
+.description {
+  font-size: 1rem;
+  margin: 0 0 1.5rem;
+  text-align: center;
+  color: #555;
+}
+
+.plans {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.plan {
+  background: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  text-align: center;
+}
+
+.price {
+  font-size: 1.2rem;
+  margin: 0.5rem 0;
+  color: #2463eb;
+}
+
+.planDescription {
+  font-size: 0.9rem;
+  color: #555;
+  margin-bottom: 0.75rem;
+}
+
+.features {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1rem;
+  text-align: left;
+  font-size: 0.9rem;
+  color: #333;
+}
+
+.features li {
+  margin-bottom: 0.25rem;
+}
+
+.upgradeButton {
+  display: inline-block;
+  padding: 0.6rem 1.2rem;
+  background: #2463eb;
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.upgradeButton:hover {
+  background: #1f4dc5;
+}
