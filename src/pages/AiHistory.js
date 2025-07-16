@@ -8,7 +8,6 @@ export default function AiHistory() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [selectedLanguage, setSelectedLanguage] = useState("eng");
-  const [selectedRegion, setSelectedRegion] = useState("US-USD");
   const [isRecording, setIsRecording] = useState(false);
   const [textOutput, setTextOutput] = useState("");
 
@@ -20,6 +19,7 @@ export default function AiHistory() {
     fra: "fr-FR",
   };
 
+  // Voice input
   const handleVoiceInput = () => {
     if (!("webkitSpeechRecognition" in window)) {
       alert("Voice recognition not supported in this browser.");
@@ -47,12 +47,14 @@ export default function AiHistory() {
     recognition.start();
   };
 
+  // Text-to-speech
   const speakResponse = (text) => {
     const utterance = new SpeechSynthesisUtterance(text);
     utterance.lang = languageMap[selectedLanguage] || "en-US";
     speechSynthesis.speak(utterance);
   };
 
+  // Submit to OpenAI
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -92,6 +94,7 @@ export default function AiHistory() {
     }
   };
 
+  // Process file uploads
   const handleFileUpload = async (e) => {
     const files = Array.from(e.target.files);
     let allText = "";
@@ -153,7 +156,24 @@ export default function AiHistory() {
   return (
     <div className={styles.container}>
       <h2 className={styles.heading}>📋 AI Medical History</h2>
+
       <form onSubmit={handleSubmit}>
+        <div className={styles.selectRow}>
+          <label>
+            Select Language:
+            <select
+              value={selectedLanguage}
+              onChange={(e) => setSelectedLanguage(e.target.value)}
+            >
+              <option value="eng">English</option>
+              <option value="hin">Hindi</option>
+              <option value="tel">Telugu</option>
+              <option value="spa">Spanish</option>
+              <option value="fra">French</option>
+            </select>
+          </label>
+        </div>
+
         <textarea
           value={input}
           onChange={(e) => setInput(e.target.value)}
@@ -162,6 +182,7 @@ export default function AiHistory() {
           placeholder="Enter your medical history here..."
           required
         />
+
         <div className={styles.buttons}>
           <button type="submit" disabled={loading} className={styles.button}>
             {loading ? "Analyzing..." : "Analyze"}
@@ -194,12 +215,51 @@ export default function AiHistory() {
           <pre>{textOutput}</pre>
         </div>
       )}
+
       {response && (
         <div className={styles.responseBox}>
           <strong>AI Insights:</strong>
           <p>{response}</p>
+          <div className={styles.actionButtons}>
+            <button
+              type="button"
+              onClick={() => handleEmail(response)}
+              className={styles.button}
+            >
+              📧 Email
+            </button>
+            <button
+              type="button"
+              onClick={() => handleWhatsApp(response)}
+              className={styles.button}
+            >
+              💬 WhatsApp
+            </button>
+            <button
+              type="button"
+              onClick={() => handleSMS(response)}
+              className={styles.button}
+            >
+              📱 SMS
+            </button>
+            <button
+              type="button"
+              onClick={() => handleDownload(response)}
+              className={styles.button}
+            >
+              📂 Download
+            </button>
+            <button
+              type="button"
+              onClick={handleSaveToDocs}
+              className={styles.button}
+            >
+              💾 Save
+            </button>
+          </div>
         </div>
       )}
+
       {error && <p className={styles.error}>{error}</p>}
 
       <p className={styles.disclaimer}>

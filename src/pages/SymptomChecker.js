@@ -7,7 +7,7 @@ export default function SymptomChecker() {
   const [response, setResponse] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [uploadedFiles, setUploadedFiles] = useState([]);
+  // const [uploadedFiles, setUploadedFiles] = useState([]); // Currently unused
   const [language, setLanguage] = useState("English");
   const [region, setRegion] = useState("United States - USD");
 
@@ -75,7 +75,7 @@ export default function SymptomChecker() {
   // Process uploaded files
   const handleFileUpload = async (e) => {
     const files = Array.from(e.target.files);
-    setUploadedFiles(files);
+    // setUploadedFiles(files); // Uncomment if you plan to display the files
 
     let allText = "";
     for (const file of files) {
@@ -88,6 +88,56 @@ export default function SymptomChecker() {
       }
     }
     setInput((prev) => prev + "\n" + allText);
+  };
+
+  // Email sharing
+  const handleEmail = () => {
+    if (!response) return;
+    const subject = encodeURIComponent("Symptom Analysis Report");
+    const body = encodeURIComponent(response);
+    window.location.href = `mailto:?subject=${subject}&body=${body}`;
+  };
+
+  // WhatsApp sharing
+  const handleWhatsApp = () => {
+    if (!response) return;
+    const message = encodeURIComponent(response);
+    window.open(`https://wa.me/?text=${message}`, "_blank");
+  };
+
+  // SMS sharing
+  const handleSMS = () => {
+    if (!response) return;
+    const message = encodeURIComponent(response);
+    window.location.href = `sms:?body=${message}`;
+  };
+
+  // Download text file
+  const handleDownload = () => {
+    if (!response) return;
+    const blob = new Blob([response], { type: "text/plain" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "symptom_analysis.txt";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  // Save to local storage
+  const handleSaveToDocs = () => {
+    if (!response) return;
+    const title = prompt("Enter a title for this report:");
+    if (!title) return;
+    const saved = JSON.parse(localStorage.getItem("savedSymptomReports")) || [];
+    saved.push({
+      title,
+      text: response,
+      date: new Date().toISOString(),
+    });
+    localStorage.setItem("savedSymptomReports", JSON.stringify(saved));
+    alert("Report saved successfully!");
   };
 
   return (
@@ -167,11 +217,11 @@ export default function SymptomChecker() {
       {error && <p className={styles.error}>{error}</p>}
 
       <div className={styles.shareRow}>
-        <button>📧 Email Doctor</button>
-        <button>💬 WhatsApp</button>
-        <button>📱 SMS</button>
-        <button>💾 Save Locally</button>
-        <button>📂 Save to Documents</button>
+        <button onClick={handleEmail}>📧 Email</button>
+        <button onClick={handleWhatsApp}>💬 WhatsApp</button>
+        <button onClick={handleSMS}>📱 SMS</button>
+        <button onClick={handleDownload}>📂 Download</button>
+        <button onClick={handleSaveToDocs}>💾 Save to Documents</button>
       </div>
 
       <p className={styles.disclaimer}>

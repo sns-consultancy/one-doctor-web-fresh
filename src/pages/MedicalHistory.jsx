@@ -7,11 +7,11 @@ import {
   Pill,
   Loader,
   CheckCircle,
-  Trash,
   ChevronDown,
   ChevronUp,
   AlertCircle,
   Mic
+  // Trash, // Uncomment if you plan to use later
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import NavBar from "../components/NavBar";
@@ -66,6 +66,7 @@ export default function MedicalHistory() {
     }
   });
 
+  // Load saved medical history
   useEffect(() => {
     const storedId = localStorage.getItem("userId");
     const token = localStorage.getItem("token");
@@ -87,8 +88,8 @@ export default function MedicalHistory() {
               }
             }
           });
-          setFormData({
-            ...formData,
+          setFormData((prev) => ({
+            ...prev,
             user_id: storedId,
             fullName: data.fullName || "",
             dob: data.dob || "",
@@ -96,8 +97,8 @@ export default function MedicalHistory() {
             categorizedConditions: categorized,
             medications: data.medications || [],
             surgeries: data.surgeries || [],
-            family_history: data.family_history || formData.family_history
-          });
+            family_history: data.family_history || prev.family_history
+          }));
         })
         .catch(() => setError("Failed to load medical history."))
         .finally(() => setLoading(false));
@@ -114,17 +115,23 @@ export default function MedicalHistory() {
   const toggleCondition = (category, condition) => {
     setFormData((prev) => {
       const selected = prev.conditions.includes(condition);
-      let updated = { ...prev };
+      const updatedConditions = selected
+        ? prev.conditions.filter((c) => c !== condition)
+        : [...prev.conditions, condition];
+      const updatedCategorized = { ...prev.categorizedConditions };
       if (selected) {
-        updated.conditions = prev.conditions.filter((c) => c !== condition);
-        updated.categorizedConditions[category] =
-          prev.categorizedConditions[category].filter((c) => c !== condition);
+        updatedCategorized[category] = updatedCategorized[category]?.filter(
+          (c) => c !== condition
+        );
       } else {
-        updated.conditions = [...prev.conditions, condition];
-        if (!updated.categorizedConditions[category]) updated.categorizedConditions[category] = [];
-        updated.categorizedConditions[category].push(condition);
+        if (!updatedCategorized[category]) updatedCategorized[category] = [];
+        updatedCategorized[category].push(condition);
       }
-      return updated;
+      return {
+        ...prev,
+        conditions: updatedConditions,
+        categorizedConditions: updatedCategorized
+      };
     });
   };
 
@@ -163,13 +170,17 @@ export default function MedicalHistory() {
   };
 
   const startVoiceRecognition = () => {
+    if (!("webkitSpeechRecognition" in window)) {
+      alert("Voice recognition not supported in this browser.");
+      return;
+    }
     const recognition = new window.webkitSpeechRecognition();
     recognition.lang = "en-US";
     recognition.start();
     recognition.onresult = (event) => {
       const transcript = event.results[0][0].transcript;
       alert(`You said: ${transcript}`);
-      // You can parse and update formData here if you like
+      // You could parse and update formData here if desired
     };
   };
 
@@ -190,7 +201,9 @@ export default function MedicalHistory() {
           <Clipboard className={styles.titleIcon} />
           Medical History
         </h1>
-        <p className={styles.subtitle}>Please complete your medical history information.</p>
+        <p className={styles.subtitle}>
+          Please complete your medical history information.
+        </p>
 
         <div className={styles.progressBarContainer}>
           <div
@@ -221,7 +234,12 @@ export default function MedicalHistory() {
                 <input
                   type="text"
                   value={formData.fullName}
-                  onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
+                  onChange={(e) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      fullName: e.target.value
+                    }))
+                  }
                   className={styles.input}
                 />
               </div>
@@ -230,7 +248,12 @@ export default function MedicalHistory() {
                 <input
                   type="date"
                   value={formData.dob}
-                  onChange={(e) => setFormData({ ...formData, dob: e.target.value })}
+                  onChange={(e) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      dob: e.target.value
+                    }))
+                  }
                   className={styles.input}
                 />
               </div>
@@ -263,7 +286,11 @@ export default function MedicalHistory() {
                         </span>
                       )}
                     </span>
-                    {expandedCategories[category] ? <ChevronUp /> : <ChevronDown />}
+                    {expandedCategories[category] ? (
+                      <ChevronUp />
+                    ) : (
+                      <ChevronDown />
+                    )}
                   </div>
                   {expandedCategories[category] && (
                     <div className={styles.checkboxGrid}>

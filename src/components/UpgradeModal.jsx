@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import styles from "../styles/UpgradeModal.module.css";
 import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
